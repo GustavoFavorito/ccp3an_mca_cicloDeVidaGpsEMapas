@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextClock;
@@ -33,5 +35,16 @@ public class ListarLocalizacoesActivity extends AppCompatActivity {
                 new ArrayAdapter<>(
                         this, android.R.layout.simple_list_item_1, localizacoes);
         localizacoesListView.setAdapter(adapter);
+
+        localizacoesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent nextActivity =
+                        new Intent(
+                                ListarLocalizacoesActivity.this,
+                                DetalhesLocalizacoesActivity.class);
+                startActivity(nextActivity);
+            }
+        });
     }
 }
