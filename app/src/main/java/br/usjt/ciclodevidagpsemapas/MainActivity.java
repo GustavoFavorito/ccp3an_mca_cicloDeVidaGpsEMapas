@@ -31,11 +31,8 @@ public class MainActivity extends AppCompatActivity implements Serializable{
     private LocationManager locationManager;
     private LocationListener locationListener;
     private TextView locationTextView;
-    private double latitudeAtual;
-    private double longitudeAtual;
     ArrayList<Location> localizacoes = new ArrayList<>();
-    ArrayList<String> listarLocalizacoes = new ArrayList<>();
-    private int indice = 1;
+    ArrayList<String> local = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +44,6 @@ public class MainActivity extends AppCompatActivity implements Serializable{
             @Override
             public void onLocationChanged(Location location) {
                 adicionarLocalizacoes(location);
-                double lat = location.getLatitude();
-                double lon = location.getLongitude();
-                latitudeAtual = lat;
-                longitudeAtual = lon;
                 locationTextView.setText(sayLocalizacoes());
             }
             @Override
@@ -76,9 +69,8 @@ public class MainActivity extends AppCompatActivity implements Serializable{
                 Intent intent =
                         new Intent(MainActivity.this,
                                 ListarLocalizacoesActivity.class);
-                intent.putStringArrayListExtra("localizacoes", listarLocalizacoes);
-                intent.putExtra("latitude", latitudeAtual);
-                intent.putExtra("longitude", longitudeAtual);
+                intent.putExtra("localizacoes", localizacoes);
+                intent.putExtra("local", local);
                 startActivity(intent);
             }
         });
@@ -159,13 +151,10 @@ public class MainActivity extends AppCompatActivity implements Serializable{
 
     private void adicionarLocalizacoes(Location location) {
         localizacoes.add(0, location);
-        listarLocalizacoes.add(
+        local.add(
                 String.format(Locale.ENGLISH,
-                        "Lat: %f / Long: %f",
+                        "%f, %f\n",
                         location.getLatitude(), location.getLongitude()));
-
-        latitudeAtual = location.getLatitude();
-        longitudeAtual = location.getLongitude();
 
         while (localizacoes.size() > LOCATION_MAX_SIZE) {
             localizacoes.remove(localizacoes.size() - 1);
@@ -176,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements Serializable{
         StringBuilder sb = new StringBuilder();
         for (Location l: localizacoes) {
             sb.append(String.format(Locale.ENGLISH,
-                    "Lat: %f / Long: %f", l.getLatitude(), l.getLongitude()) + "\n");
+                    "Lat: %f, Long: %f\n", l.getLatitude(), l.getLongitude()));
         }
         return sb.toString();
     }

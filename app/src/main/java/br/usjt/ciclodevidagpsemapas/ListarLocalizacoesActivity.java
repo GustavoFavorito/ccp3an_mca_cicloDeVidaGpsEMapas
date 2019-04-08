@@ -1,7 +1,9 @@
 package br.usjt.ciclodevidagpsemapas;
 
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,12 +18,11 @@ import org.w3c.dom.Text;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ListarLocalizacoesActivity extends AppCompatActivity {
 
     private ListView localizacoesListView;
-    private double latitude;
-    private double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,24 +34,21 @@ public class ListarLocalizacoesActivity extends AppCompatActivity {
         final ArrayList<String> localizacoes =
                 origemIntent.getStringArrayListExtra("localizacoes");
 
-        latitude = origemIntent.getDoubleExtra("latitude", 0);
-        longitude = origemIntent.getDoubleExtra("longitude", 0);
+        final ArrayList<String> local =
+                origemIntent.getStringArrayListExtra("local");
 
-        ArrayAdapter adapter =
-                new ArrayAdapter<>(
-                        this, android.R.layout.simple_list_item_1, localizacoes);
+        final ArrayAdapter adapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_list_item_1, local);
         localizacoesListView.setAdapter(adapter);
 
         localizacoesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent nextActivity =
-                        new Intent(
-                                ListarLocalizacoesActivity.this,
-                                DetalhesLocalizacoesActivity.class);
-                nextActivity.putExtra("latitude", latitude);
-                nextActivity.putExtra("longitude", longitude);
-                startActivity(nextActivity);
+                Uri gmmIntentUri = Uri.parse("geo: " + local.get((int)id));
+                System.out.println(gmmIntentUri);
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
             }
         });
     }
