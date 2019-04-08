@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListarLocalizacoesActivity extends AppCompatActivity {
@@ -23,11 +25,13 @@ public class ListarLocalizacoesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_listar_localizacoes);
         localizacoesListView = findViewById(R.id.localizacoesListView);
         Intent origemIntent = getIntent();
-        final List<Location> localizacoes =
-                (List<Location>)origemIntent.getSerializableExtra("localizacoes");
+
+        final ArrayList<String> localizacoes =
+                origemIntent.getStringArrayListExtra("localizacoes");
 
         ArrayAdapter adapter =
-                new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, localizacoes);
+                new ArrayAdapter<>(
+                        this, android.R.layout.simple_list_item_1, localizacoes);
         localizacoesListView.setAdapter(adapter);
     }
 }

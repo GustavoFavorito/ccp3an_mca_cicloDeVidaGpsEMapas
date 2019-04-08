@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -22,7 +21,7 @@ import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements Serializable{
     private static final int REQUEST_CODE_GPS = 1001;
@@ -34,7 +33,8 @@ public class MainActivity extends AppCompatActivity implements Serializable{
     private TextView locationTextView;
     private double latitudeAtual;
     private double longitudeAtual;
-    List<Location> localizacoes = new ArrayList<>();
+    ArrayList<Location> localizacoes = new ArrayList<>();
+    ArrayList<String> listarLocalizacoes = new ArrayList<>();
     private int indice = 1;
 
     @Override
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements Serializable{
                 Intent intent =
                         new Intent(MainActivity.this,
                                 ListarLocalizacoesActivity.class);
-                intent.putExtra("localizacoes", (Serializable) localizacoes);
+                intent.putStringArrayListExtra("localizacoes", listarLocalizacoes);
                 startActivity(intent);
             }
         });
@@ -157,6 +157,10 @@ public class MainActivity extends AppCompatActivity implements Serializable{
 
     private void adicionarLocalizacoes(Location location) {
         localizacoes.add(0, location);
+        listarLocalizacoes.add(
+                String.format(Locale.ENGLISH,
+                        "Lat: %f / Long: %f",
+                        location.getLatitude(), location.getLongitude()));
         while (localizacoes.size() > LOCATION_MAX_SIZE) {
             localizacoes.remove(localizacoes.size() - 1);
         }
@@ -165,8 +169,8 @@ public class MainActivity extends AppCompatActivity implements Serializable{
     private String sayLocalizacoes() {
         StringBuilder sb = new StringBuilder();
         for (Location l: localizacoes) {
-            sb.append(String.format(indice + ": Lat: %f, Long: %f\n", l.getLatitude(), l.getLongitude()));
-            indice++;
+            sb.append(String.format
+                    ("Lat: %f / Long: %f", l.getLatitude(), l.getLongitude()));
         }
         return sb.toString();
     }
