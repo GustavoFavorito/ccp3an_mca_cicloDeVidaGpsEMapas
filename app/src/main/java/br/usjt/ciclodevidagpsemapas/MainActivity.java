@@ -77,6 +77,8 @@ public class MainActivity extends AppCompatActivity implements Serializable{
                         new Intent(MainActivity.this,
                                 ListarLocalizacoesActivity.class);
                 intent.putStringArrayListExtra("localizacoes", listarLocalizacoes);
+                intent.putExtra("latitude", latitudeAtual);
+                intent.putExtra("longitude", longitudeAtual);
                 startActivity(intent);
             }
         });
@@ -161,6 +163,10 @@ public class MainActivity extends AppCompatActivity implements Serializable{
                 String.format(Locale.ENGLISH,
                         "Lat: %f / Long: %f",
                         location.getLatitude(), location.getLongitude()));
+
+        latitudeAtual = location.getLatitude();
+        longitudeAtual = location.getLongitude();
+
         while (localizacoes.size() > LOCATION_MAX_SIZE) {
             localizacoes.remove(localizacoes.size() - 1);
         }

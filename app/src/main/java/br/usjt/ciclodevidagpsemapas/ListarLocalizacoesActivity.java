@@ -20,16 +20,21 @@ import java.util.List;
 public class ListarLocalizacoesActivity extends AppCompatActivity {
 
     private ListView localizacoesListView;
+    private double latitude;
+    private double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar_localizacoes);
         localizacoesListView = findViewById(R.id.localizacoesListView);
-        Intent origemIntent = getIntent();
+        final Intent origemIntent = getIntent();
 
         final ArrayList<String> localizacoes =
                 origemIntent.getStringArrayListExtra("localizacoes");
+
+        latitude = origemIntent.getDoubleExtra("latitude", 0);
+        longitude = origemIntent.getDoubleExtra("longitude", 0);
 
         ArrayAdapter adapter =
                 new ArrayAdapter<>(
@@ -43,6 +48,8 @@ public class ListarLocalizacoesActivity extends AppCompatActivity {
                         new Intent(
                                 ListarLocalizacoesActivity.this,
                                 DetalhesLocalizacoesActivity.class);
+                nextActivity.putExtra("latitude", latitude);
+                nextActivity.putExtra("longitude", longitude);
                 startActivity(nextActivity);
             }
         });
