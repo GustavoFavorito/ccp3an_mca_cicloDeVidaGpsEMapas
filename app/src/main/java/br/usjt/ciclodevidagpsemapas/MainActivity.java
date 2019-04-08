@@ -169,8 +169,8 @@ public class MainActivity extends AppCompatActivity implements Serializable{
     private String sayLocalizacoes() {
         StringBuilder sb = new StringBuilder();
         for (Location l: localizacoes) {
-            sb.append(String.format
-                    ("Lat: %f / Long: %f", l.getLatitude(), l.getLongitude()));
+            sb.append(String.format(Locale.ENGLISH,
+                    "Lat: %f / Long: %f", l.getLatitude(), l.getLongitude()));
         }
         return sb.toString();
     }
