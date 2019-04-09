@@ -24,10 +24,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements Serializable{
-    private static final int REQUEST_CODE_GPS = 1001;
-    private static long LOCATION_INTERVAL = 2 * 60 * 1000;
-    private static int LOCATION_DISTANCE = 200;
-    private static int LOCATION_MAX_SIZE = 50;
+    private Localizacao localizacao = new Localizacao();
     private LocationManager locationManager;
     private LocationListener locationListener;
     private TextView locationTextView;
@@ -108,12 +105,14 @@ public class MainActivity extends AppCompatActivity implements Serializable{
             //somente ativa
             //a localização é obtida via hardware, intervalo de 0 segundos e 0 metros entre atualizações
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                    LOCATION_INTERVAL, LOCATION_DISTANCE, locationListener);
+                    Localizacao.getLocationInterval(),
+                    Localizacao.getLocationDistance(),
+                    locationListener);
         } else {
             //permissão ainda não foi nada, solicita ao usuário
             //quando o usuário responder, o método onRequestPermissionsResult vai ser chamado
             ActivityCompat.requestPermissions(this, new String[]
-                    {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_GPS);
+                    {Manifest.permission.ACCESS_FINE_LOCATION}, Localizacao.getRequestCodeGps());
         }
     }
 
@@ -126,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements Serializable{
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_CODE_GPS) {
+        if (requestCode == Localizacao.getRequestCodeGps()) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //permissão concedida, ativamos o GPS
                 if (ActivityCompat.checkSelfPermission(this,
@@ -156,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements Serializable{
                         "%f, %f\n",
                         location.getLatitude(), location.getLongitude()));
 
-        while (localizacoes.size() > LOCATION_MAX_SIZE) {
+        while (localizacoes.size() > Localizacao.getLocationMaxSize()) {
             localizacoes.remove(localizacoes.size() - 1);
         }
     }
