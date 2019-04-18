@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import java.util.List;
+import java.util.Locale;
 
 public class LocalizacaoArrayAdapter extends ArrayAdapter<Localizacao> {
 
@@ -17,17 +18,31 @@ public class LocalizacaoArrayAdapter extends ArrayAdapter<Localizacao> {
     public View getView (int position, View convertView, ViewGroup parent) {
         Localizacao localizacao = getItem(position);
         LayoutInflater inflater = LayoutInflater.from(getContext());
+        ViewHolder vh;
 
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.list_item, parent, false);
+
+            vh = new ViewHolder();
+
+            vh.latitude = convertView.findViewById(R.id.latitudeTextView);
+            vh.longitude = convertView.findViewById(R.id.longitudeTextView);
+
+            convertView.setTag(vh);
         }
 
-        TextView latitude = convertView.findViewById(R.id.latitudeTextView);
-        TextView longitude = convertView.findViewById(R.id.longitudeTextView);
+        vh = (ViewHolder) convertView.getTag();
 
-        latitude.setText(String.format("Latitude: %.5f", localizacao.getLatitude()));
-        longitude.setText(String.format("Longitude: %.5f", localizacao.getLongitude()));
+        vh.latitude.setText(
+                String.format(Locale.ENGLISH, "Latitude: %.5f", localizacao.getLatitude()));
+        vh.longitude.setText(
+                String.format(Locale.ENGLISH, "Longitude: %.5f", localizacao.getLongitude()));
 
         return convertView;
+    }
+
+    private class ViewHolder {
+        TextView latitude;
+        TextView longitude;
     }
 }
