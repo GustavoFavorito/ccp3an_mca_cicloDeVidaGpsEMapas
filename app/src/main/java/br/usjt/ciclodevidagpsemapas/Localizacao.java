@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Localizacao implements Serializable {
 
-    private static final int REQUEST_CODE_GPS = 1001;
+    static final int REQUEST_CODE_GPS = 1001;
     private static long LOCATION_INTERVAL = 2 * 60 * 1000;
     private static int LOCATION_DISTANCE = 200;
     private static int LOCATION_MAX_SIZE = 50;
