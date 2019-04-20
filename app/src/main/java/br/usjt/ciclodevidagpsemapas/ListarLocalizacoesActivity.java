@@ -1,14 +1,10 @@
 package br.usjt.ciclodevidagpsemapas;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 
@@ -16,12 +12,15 @@ public class ListarLocalizacoesActivity extends AppCompatActivity {
 
 
     private RecyclerView localizacoesRecycleView;
+    private LocalizacaoDAO localizacaoDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar_localizacoes);
         Intent origemIntent = getIntent();
+        localizacaoDAO = new LocalizacaoDAO(this);
+
         final ArrayList<Localizacao> localizacoes =
                 (ArrayList<Localizacao>) origemIntent.getSerializableExtra("localizacoes");
         localizacoesRecycleView = findViewById(R.id.localizacoesRecyclerView);

@@ -8,8 +8,27 @@ public class Localizacao implements Serializable {
     private static long LOCATION_INTERVAL = 2 * 60 * 1000;
     private static int LOCATION_DISTANCE = 200;
     private static int LOCATION_MAX_SIZE = 50;
+    private int id;
     private double latitude;
     private double longitude;
+
+    public Localizacao() {
+
+    }
+
+    public Localizacao(int id, double latitude, double longitude) {
+        this.id = id;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public static int getRequestCodeGps() {
         return REQUEST_CODE_GPS;
