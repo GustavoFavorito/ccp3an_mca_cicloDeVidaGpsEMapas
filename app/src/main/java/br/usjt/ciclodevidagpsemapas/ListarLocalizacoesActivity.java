@@ -20,6 +20,7 @@ public class ListarLocalizacoesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_listar_localizacoes);
         Intent origemIntent = getIntent();
         localizacaoDAO = new LocalizacaoDAO(this);
+        System.out.print("asdaushduashduahduasdh");
 
         final ArrayList<Localizacao> localizacoes =
                 (ArrayList<Localizacao>) origemIntent.getSerializableExtra("localizacoes");
