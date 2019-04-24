@@ -49,12 +49,9 @@ public class MainActivity extends AppCompatActivity {
         localizacaoDAO = new LocalizacaoDAO(this);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ListarLocalizacoesActivity.class);
-                startActivity(intent);
-            }
+        fab.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, ListarLocalizacoesActivity.class);
+            startActivity(intent);
         });
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -62,13 +59,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onLocationChanged(Location location) {
                 Localizacao localizacao = new Localizacao(location.getLatitude(), location.getLongitude());
-//                locationTextView.setText(String.format(Locale.getDefault(),
-//                        "Lat: %f, Long: %f",
-//                        localizacao.getLatitude(),
-//                        localizacao.getLongitude()
-//                ));
-                locationTextView.setText(mostrarLocalizacoes());
                 localizacaoDAO.insertLocalizacao(localizacao);
+                locationTextView.setText(mostrarLocalizacoes());
             }
 
             @Override
