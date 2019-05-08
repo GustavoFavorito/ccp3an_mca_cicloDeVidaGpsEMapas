@@ -25,5 +25,6 @@ public class LocalizacaoDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onOpen(SQLiteDatabase db) {
+
     }
 }

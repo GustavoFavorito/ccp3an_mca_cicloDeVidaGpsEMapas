@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="api_key">ef0b0973b783e0614ac87612ec04344b</string>
-    <string name="web_service_url">http://api.openweathermap.org/data/2.5/forecast?lat=%f&amp;long=%f&amp;APPID=%s&amp;units=metric</string>
+    <string name="api_key">9c7d9ef4adddf531c6b4af4df9245e53</string>
+    <string name="web_service_url">http://api.openweathermap.org/data/2.5/forecast?lat=%s&amp;lon=%s&amp;appid=%s&amp;units=metric&amp;lang=pt</string>
 </resources>

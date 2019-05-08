@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -21,14 +22,13 @@ public class LocalizacaoDAO {
     public LocalizacaoDAO(Context context){
         this.context = context;
     }
-
-    public List<Localizacao> listarLocalizacoes(){
+    public List<Localizacao> lista(){
         LocalizacaoDBHelper dbHelper = new LocalizacaoDBHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         List<Localizacao> localizacoes = new ArrayList<>();
         String command = String.format(
                 Locale.getDefault(),
-                "SELECT * FROM %s;",
+                "SELECT * FROM %s ORDER BY data desc LIMIT 50;",
                 LocalizacaoContract.LocalizacaoTable.TABLE_NAME
         );
         Cursor cursor = db.rawQuery(command, null);
@@ -48,7 +48,12 @@ public class LocalizacaoDAO {
                     "%s",
                     LocalizacaoContract.LocalizacaoTable.COLUMN_NAME_LONGITUDE
             )));
-            localizacoes.add(new Localizacao(idLocalizacao, latitude, longitude));
+            long milisegundos = cursor.getLong(cursor.getColumnIndex(String.format(
+                    Locale.getDefault(),
+                    "%s",
+                    LocalizacaoContract.LocalizacaoTable.COLUMN_NAME_DATA
+            )));
+            localizacoes.add(new Localizacao(idLocalizacao, latitude, longitude, new Date(milisegundos)));
         }
         cursor.close();
         db.close();
@@ -62,6 +67,7 @@ public class LocalizacaoDAO {
         ContentValues values = new ContentValues();
         values.put(LocalizacaoContract.LocalizacaoTable.COLUMN_NAME_LATITUDE, localizacao.getLatitude());
         values.put(LocalizacaoContract.LocalizacaoTable.COLUMN_NAME_LONGITUDE, localizacao.getLongitude());
+        values.put(LocalizacaoContract.LocalizacaoTable.COLUMN_NAME_DATA, localizacao.getData().getTime());
         db.insert(LocalizacaoContract.LocalizacaoTable.TABLE_NAME, null, values);
         db.close();
         dbHelper.close();

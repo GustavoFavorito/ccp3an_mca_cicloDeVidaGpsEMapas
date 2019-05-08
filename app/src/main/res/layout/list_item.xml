@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:baselineAligned="false">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_weight="1"
+        android:baselineAligned="false">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_weight="1"
+            tools:ignore="NestedWeights,UselessParent">
 
             <TextView
                 android:id="@+id/latitudeTextView"
@@ -31,62 +34,6 @@
                 android:layout_margin="8dp"
                 android:gravity="center"
                 tools:text="LongitudeTextView" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-            <ImageView
-                android:id="@+id/conditionImageView"
-                android:layout_width="@dimen/image_side_length"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/weather_condition_image"
-                android:scaleType="fitCenter"
-                android:src="@mipmap/ic_launcher"/>
-            <GridLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:columnCount="3"
-                android:rowCount="2"
-                android:useDefaultMargins="true">
-                <TextView
-                    android:id="@+id/dayTextView"
-                    android:layout_column="0"
-                    android:layout_row="0"
-                    android:layout_columnSpan="3"
-                    android:gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="fill_horizontal"
-                    android:textAppearance="?android:attr/textAppearanceLarge"/>
-                <TextView
-                    android:id="@+id/lowTextView"
-                    android:layout_column="0"
-                    android:layout_row="1"
-                    android:gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"/>
-                <TextView
-                    android:id="@+id/highTextView"
-                    android:layout_column="1"
-                    android:layout_row="1"
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"/>
-                <TextView
-                    android:id="@+id/humidityTextView"
-                    android:layout_column="2"
-                    android:layout_row="1"
-                    android:gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"/>
-            </GridLayout>
         </LinearLayout>
     </LinearLayout>
-
-</android.support.v7.widget.CardView>
+</LinearLayout>

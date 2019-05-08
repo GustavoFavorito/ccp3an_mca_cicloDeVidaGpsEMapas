@@ -8,13 +8,13 @@ import android.widget.TextView;
 
 import br.usjt.ciclodevidagpsemapas.R;
 
-public class LocalizacaoViewHolder extends RecyclerView.ViewHolder {
+public class LocaisViewHolder extends RecyclerView.ViewHolder {
     public TextView latitudeTextView;
     public TextView longitudeTextView;
 
-    public LocalizacaoViewHolder(View itemView) {
+    public LocaisViewHolder(View itemView) {
         super(itemView);
         latitudeTextView = itemView.findViewById(R.id.latitudeTextView);
-        longitudeTextView = itemView.findViewById(R.id.longitudeTextView);;
+        longitudeTextView = itemView.findViewById(R.id.longitudeTextView);
     }
 }
